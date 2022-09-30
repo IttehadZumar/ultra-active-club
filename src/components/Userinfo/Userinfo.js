@@ -34,7 +34,7 @@ const UserInfo = ({ exerciseTime, notify }) => {
                     <img className='rounded-circle' src="profile.jpg" alt="" />
                 </div>
                 <div className='mt-3'>
-                    <h5>Meraj Serker</h5>
+                    <h5>Ittehad Abdullah</h5>
                     <p><i class="fa-solid fa-location-dot"></i>Dhaka,Bangladesh</p>
                 </div>
             </div>
@@ -45,7 +45,7 @@ const UserInfo = ({ exerciseTime, notify }) => {
                             <p className='text-center text-secondary'>Weight</p>
                         </div>
                         <div>
-                            <h3><span className='fs-3 font-bold text-dark'>5'6"</span></h3>
+                            <h3><span className='fs-3 font-bold text-dark'>5'7"</span></h3>
                             <p className='text-center text-secondary'>height</p>
                         </div>
                         <div>
