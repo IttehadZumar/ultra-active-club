@@ -1,11 +1,12 @@
-import { toast, ToastContainer } from 'react-toastify';
 import './App.css';
-import Meditationbody from './components/Meditationbody/Meditationbody';
-import 'react-toastify/dist/ReactToastify.css';
-
+import Header from './components/Header/Header';
+import Activity from './components/Activity/Activity';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+import Question from './components/Question/Question';
 function App() {
   const notify = () => {
-    toast.success('🧘 Meditation Completed!', {
+    toast.success('Target Completed!', {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -16,12 +17,12 @@ function App() {
     });
   }
   return (
-    <div className="App">
-      <h1>Hello</h1>
+    <div>
+      <Header></Header>
       <ToastContainer />
-      <Meditationbody notify={notify}></Meditationbody>
+      <Activity notify={notify}></Activity>
+      <Question></Question>
     </div>
-
   );
 }
 

@@ -1,95 +1,71 @@
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Avatar } from 'flowbite-react';
-import { useState } from 'react';
 
-const Userinfo = (props) => {
-    const [breakTime, setbreakTime] = useState('0 seconds');
+import React, { useState } from 'react';
+
+const UserInfo = ({ exerciseTime, notify }) => {
+    const [breakTime, setbreakTime] = useState(0);
     if (localStorage.getItem("breakTime") === null) {
         localStorage.setItem("breakTime", breakTime);
     }
-    const handleClick = (event) => {
+    const handlebtn = (event) => {
         let allBtn = event.currentTarget.parentElement.children;
         for (const otherBtn of allBtn) {
             if (otherBtn.innerText !== event.currentTarget.innerText) {
-                otherBtn.classList.remove('bg-blue-600', 'text-white');
-                otherBtn.classList.add('bg-white');
+                otherBtn.classList.remove('btn-secondary');
+                otherBtn.classList.add('btn-light');
             }
         }
-        event.currentTarget.classList.add('bg-blue-600', 'text-white');
+        event.currentTarget.classList.add('btn-secondary');
         event.currentTarget.classList.remove('bg-white');
-        localStorage.setItem("breakTime", event.currentTarget.innerText.slice(0, -1) + ' seconds');
+        localStorage.setItem("breakTime", event.currentTarget.innerText.slice(0, -3) + 'min');
         setbreakTime(localStorage.getItem("breakTime"));
     };
 
     const secondBtns = document.getElementsByClassName('secBtn');
     for (const secondBtn of secondBtns) {
         if (parseInt(secondBtn.innerHTML.slice(0, -1)) === parseInt(localStorage.getItem("breakTime"))) {
-            secondBtn.classList.remove('bg-white')
-            secondBtn.classList.add('bg-blue-600', 'text-white')
+            secondBtn.classList.remove('btn-light')
+            secondBtn.classList.add('btn-secondary')
         }
     }
     return (
-        <div className='sticky top-8 m-8'>
-            <div>
-                <Avatar
-                    img="profile-picture.png"
-                    rounded={true}>
-                    <div className="space-y-0.1 font-medium dark:text-white">
-                        <div>
-                            Nabil Newaz
-                        </div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                            <FontAwesomeIcon className='mr-1' icon={faLocationDot} />Dhaka, Bangladesh
-                        </div>
-                    </div>
-                </Avatar>
+        <div className='sticky-lg-top'>
+            <div className='d-flex justify-content-around mb-5'>
+                <div>
+                    <img className='rounded-circle' src="profile.jpg" alt="" />
+                </div>
+                <div className='mt-3'>
+                    <h5>Meraj Serker</h5>
+                    <p><i class="fa-solid fa-location-dot"></i>Dhaka,Bangladesh</p>
+                </div>
             </div>
             <div className='mt-5'>
-                <div className='flex justify-between bg-blue-100 px-6 py-2 rounded-md'>
-                    <div>
-                        <h3><span className='text-2xl font-bold text-black'>75</span><span className='text-gray-500 text-1xl'>kg</span></h3>
-                        <p className='text-center text-gray-800'>Weight</p>
+                    <div className='d-flex justify-content-around bg-info px-5 py-2 rounded-2 bg-opacity-25  mb-3'>
+                        <div>
+                            <h3><span className='fs-3 font-bold text-dark'>75</span><span className='text-secondary fs-5'>kg</span></h3>
+                            <p className='text-center text-secondary'>Weight</p>
+                        </div>
+                        <div>
+                            <h3><span className='fs-3 font-bold text-dark'>5'6"</span></h3>
+                            <p className='text-center text-secondary'>height</p>
+                        </div>
+                        <div>
+                            <h3><span className='fs-3 font-bold text-dark'>21</span><span className='text-secondary fs-5'>yrs</span></h3>
+                            <p className='text-center text-secondary'>Age</p>
+                        </div>
                     </div>
-                    <div>
-                        <h3><span className='text-2xl font-bold text-black'>6.5</span><span className='text-gray-500 text-1xl'>fit</span></h3>
-                        <p className='text-center text-gray-800'>Height</p>
-                    </div>
-                    <div>
-                        <h3><span className='text-2xl font-bold text-black'>25</span><span className='text-gray-500 text-1xl'>yrs</span></h3>
-                        <p className='text-center text-gray-800'>Age</p>
-                    </div>
                 </div>
-            </div>
-            <div className='mt-6'>
-                <h3 className='text-xl font-medium'>Add A Break</h3>
-                <div id='secondsBtn' className='flex justify-between bg-blue-100 px-5 py-3 rounded-md mt-2'>
-                    <button className={'h-10 w-10 bg-white rounded-full secBtn'} onClick={handleClick}>10s</button>
-                    <button className={'h-10 w-10 bg-white rounded-full secBtn'} onClick={handleClick}>20s</button>
-                    <button className={'h-10 w-10 bg-white rounded-full secBtn'} onClick={handleClick}>30s</button>
-                    <button className={'h-10 w-10 bg-white rounded-full secBtn'} onClick={handleClick}>40s</button>
-                    <button className={'h-10 w-10 bg-white rounded-full secBtn'} onClick={handleClick}>50s</button>
-                </div>
-            </div>
-            <div className='mt-6'>
-                <h3 className='text-xl font-medium'>Exercise Details</h3>
-                <div className='flex justify-between bg-blue-100 px-5 py-3 rounded-md mt-3'>
-                    <p><span className='font-bold'>Exercise time</span></p>
-                    <p><span className='text-gray-500'><span>{props.exerciseTime}</span> seconds</span></p>
-                </div>
-                <div className='flex justify-between bg-blue-100 px-5 py-3 rounded-md mt-3'>
-                    <p><span className='font-bold'>Break time</span></p>
-                    <p><span className='text-gray-500'>{localStorage.getItem("breakTime")}</span></p>
-                </div>
-            </div>
-            <button
-                onClick={props.notify}
-                type="button"
-                className="mt-5 inline-flex w-full justify-center rounded-lg bg-blue-600 px-5 py-4 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900">
-                Meditation Completed
-            </button>
+            <h3>Add A Break</h3>
+            <button onClick={handlebtn} type="button" className="btn btn-light rounded-5 secBtn me-1">10min</button>
+            <button onClick={handlebtn} type="button" className="btn btn-light rounded-5 secBtn me-1">15min</button>
+            <button onClick={handlebtn} type="button" className="btn btn-light rounded-5 secBtn me-1">20min</button>
+            <button onClick={handlebtn} type="button" className="btn btn-light rounded-5 secBtn me-1">25min</button>
+            <button onClick={handlebtn} type="button" className="btn btn-light rounded-5 secBtn me-1">30min</button>
+            <h3>Exercise details: </h3>
+            <h5>Exercise Time: {exerciseTime} hr</h5>
+            <h5>Break time: {localStorage.getItem("breakTime")}</h5>
+            <button onClick={notify} className='btn btn-dark'>Target Complete</button>
         </div>
     );
 };
 
-export default Userinfo;
+export default UserInfo;
